@@ -54,7 +54,7 @@
     <input type="text" id="inputLogin" class="form-control" name="login" placeholder="Логин" required autofocus>
     <label for="inputPassword" class="sr-only">Пароль</label>
     <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Пароль" required>
-
+    <input type="hidden" name="csrf_token" value="<?= \App\System\CSRF::makeToken(); ?>" />
     <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
     <div class="nav-link mb-3">
         <a href="/user/registration">Зарегистрироваться</a>

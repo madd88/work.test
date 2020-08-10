@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use App\Model\User;
+use App\System\CSRF;
 use App\Traits\Form;
 use App\System\Session;
 
@@ -23,7 +24,7 @@ class UserController extends BaseController
      */
     public function auth()
     {
-        if ($_POST) {
+        if ($_POST && CSRF::isTokenValid()) {
             $User = $this->UserModel->getUserIfExists($_POST['login'], $_POST['password']);
             if ( ! $User) {
                 self::render('User/auth', ['errors'=> ['Пользователь не найден или неверный пароль.']]);
@@ -42,7 +43,8 @@ class UserController extends BaseController
      */
     public function registration()
     {
-        if ($_POST && $this->validateRegisterForm($_POST)) {
+        if ($_POST && $this->validateRegisterForm($_POST) && CSRF::isTokenValid()) {
+            unset($_POST['csrf_token']);
             $this->clearForm($_POST);
             if ($this->UserModel->getUserByLogin($_POST['login']) > 0) {
                 self::render('User/registration', ['errors' => ['Такой пользователь уже существует.']]);
@@ -94,12 +96,12 @@ class UserController extends BaseController
 
         $User = $this->UserModel->getUserByLogin(Session::get('user_login'));
         $this->clearForm($_POST);
-        if ($_POST) {
+        if ($_POST && CSRF::isTokenValid()) {
+            unset($_POST['csrf_token']);
             if (
                 isset($_POST['password'])
-                && (empty($_POST['password']) || $this->UserModel->genPassword(
-                        $_POST['password']
-                    ) === $User->password)) {
+                && (empty($_POST['password'])
+                    || $this->UserModel->genPassword($_POST['password']) === $User->password)) {
                 unset($_POST['password']);
             }
             if ($this->validateProfileForm($_POST)) {

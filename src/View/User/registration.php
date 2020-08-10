@@ -67,7 +67,7 @@
     <input type="password" id="inputPassword" name="password" class="form-control" minlength="5" maxlength="55" placeholder="Пароль" required>
     <label for="inputPassword2" class="sr-only">Повторите пароль</label>
     <input type="password" id="inputPassword2" class="form-control" minlength="5" maxlength="55" placeholder="Повторите пароль" required>
-
+    <input type="hidden" name="csrf_token" value="<?= \App\System\CSRF::makeToken(); ?>" />
     <input class="btn btn-lg btn-primary btn-block" type="submit" id="registration_submit" value="Зарегистрироваться">
     <div class="nav-link mb-3">
         <a href="/user/auth">Войти</a>
