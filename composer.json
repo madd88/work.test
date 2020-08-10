@@ -1,0 +1,26 @@
+{
+    "name": "madd/users",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\Controller\\": "src/Controller",
+            "App\\Model\\": "src/Model",
+            "App\\Traits\\": "src/Trait",
+            "App\\System\\": "src/System",
+            "App\\": "src"
+        },
+        "files": [
+            "config.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Aleksei Nikolaev",
+            "email": "madd.niko@gmail.com"
+        }
+    ],
+    "require": {
+        "ext-pdo_mysql": "^7.3",
+        "ext-mbstring": "^7.3"
+    }
+}
